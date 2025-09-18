@@ -1,19 +1,15 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { ThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import ReactDOM from 'react-dom';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
 
-const theme = createTheme();
+const theme = createMuiTheme();
 
-const container = document.getElementById('root');
-const root = createRoot(container);
-
-root.render(
-  <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
-  </StyledEngineProvider>
+ReactDOM.render(
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </ThemeProvider>,
+  document.getElementById('root')
 );
