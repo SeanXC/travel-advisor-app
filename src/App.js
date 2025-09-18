@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 
 import Header from './components/Header/Header';
 import List from './components/List/List';
 import Map from './components/Map/Map';
-
 
 const App = () => {
     return (
@@ -17,7 +16,7 @@ const App = () => {
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <Map />
-                    </Grid>
+                </Grid>
             </Grid>
         </div>
     );
