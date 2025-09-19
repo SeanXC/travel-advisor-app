@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 
 import { getPlacesData } from './api';
@@ -20,13 +20,12 @@ const App = () => {
 
 
     useEffect(() => {
-        console.log(coordinates, bounds);
-        getPlacesData()
-            .then((data) => {
-            console.log(data);
-            setPlaces(data);
-        })
-    }, [coordinates, bounds]);
+        if (!bounds?.sw || !bounds?.ne) return;
+      
+        getPlacesData(bounds.sw, bounds.ne)
+          .then((data) => setPlaces(data || []))
+          .catch(console.error);
+      }, [coordinates, bounds]);
 
     return (
         <div>
