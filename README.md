@@ -2,7 +2,9 @@
 
 A React-based travel recommendation app that helps users discover restaurants, hotels, and attractions with real-time weather and interactive maps.  
 
-Live Demo: **[Travel Advisor](https://travelsuggest.netlify.app/)**  
+## Live Demo Link  
+**[Map-Based Travel Recommendation System](https://travel-rco-sys.netlify.app/)**
+
 
 ---
 
