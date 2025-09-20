@@ -1,4 +1,4 @@
-# Travel Advisor
+# Map-Based Travel Recommendation System
 
 A React-based travel recommendation app that helps users discover restaurants, hotels, and attractions with real-time weather and interactive maps.  
 
