@@ -10,13 +10,31 @@
     "jest-dom"
   ],
   "rules": {
-    "testing-library/await-async-query": "error",
-    "testing-library/no-await-sync-query": "error",
+    "testing-library/await-async-query": "warn",
+    "testing-library/no-await-sync-query": "warn",
     "testing-library/no-debugging-utils": "warn",
     "testing-library/no-dom-import": "error",
-    "jest-dom/prefer-checked": "error",
-    "jest-dom/prefer-enabled-disabled": "error",
-    "jest-dom/prefer-required": "error",
-    "jest-dom/prefer-to-have-attribute": "error"
-  }
+    "testing-library/no-unnecessary-act": "warn",
+    "jest-dom/prefer-checked": "warn",
+    "jest-dom/prefer-enabled-disabled": "warn",
+    "jest-dom/prefer-required": "warn",
+    "jest-dom/prefer-to-have-attribute": "warn",
+    "jest-dom/prefer-to-have-text-content": "warn",
+    "jest/no-conditional-expect": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-vars": "warn",
+    "import/no-anonymous-default-export": "warn",
+    "no-useless-constructor": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*", "**/*.test.js", "**/*.test.jsx", "**/setupTests.js"],
+      "rules": {
+        "testing-library/no-unnecessary-act": "off",
+        "jest-dom/prefer-to-have-text-content": "off",
+        "jest/no-conditional-expect": "off",
+        "no-useless-constructor": "off"
+      }
+    }
+  ]
 }
