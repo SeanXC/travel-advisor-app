@@ -7,9 +7,11 @@ import useStyles from './styles';
 
 
 
-const PlaceDetails = ({place}) => {
-
+const PlaceDetails = ({place, selected, refProp}) => {
     const classes = useStyles();
+    if (selected) {
+        refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     return (
         <Card elevation={6}>
             <CardMedia
@@ -32,7 +34,7 @@ const PlaceDetails = ({place}) => {
                     <Typography gutterBottom variant="subtitle1">{place.ranking}</Typography>
                 </Box>
                 { place?.awards?.map((award, index) => (
-                    <Box my={1} display="flex" justifyContent="space-between" alignItems="center">
+                    <Box key={index} my={1} display="flex" justifyContent="space-between" alignItems="center">
                         <img src={award.images.small} alt={award.display_name} />
                         <Typography gutterBottom variant="subtitle2" color='textSecondary'>{award.display_name}</Typography>
                     </Box>
