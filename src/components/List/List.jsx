@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, Select } from '@material-ui/core';
 import useStyles from './styles';
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
@@ -12,7 +12,7 @@ const List = ( { places, childClicked, isLoading, type, rating, setType, setRati
             const refs = Array(places.length).fill().map((_, i) => elRefs[i] || createRef());
             setElRefs(refs);
         }
-    }, [places]);
+    }, [places, elRefs]);
 
     useEffect(() => {
         if (childClicked !== null && elRefs.length > 0 && elRefs[childClicked]) {
