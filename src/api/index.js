@@ -20,23 +20,41 @@ export const getPlacesData = async (sw, ne, type) => {
     }
 };
 
-
 export const getWeatherData = async (lat, lng) => {
   try {
-    const { data } = await axios.get('https://open-weather13.p.rapidapi.com/latlon', {
+    const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
       params: {
-        latitude: lat,
-        longitude: lng,
-        lang: 'EN'
-      },
-      headers: {
-        'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY,
-        'x-rapidapi-host': 'open-weather13.p.rapidapi.com'
+        lat: lat,
+        lon: lng,
+        appid: process.env.REACT_APP_OPENWEATHER_API_KEY,
+        lang: 'en',
+        units: 'metric'
       }
     });
-    console.log('Weather API Response:', data);
-    return data;
+    
+    const convertedData = {
+      name: data.name,
+      weather: [{
+        main: data.weather[0].main,
+        description: data.weather[0].description,
+        icon: data.weather[0].icon
+      }],
+      main: {
+        temp: data.main.temp + 273.15,
+        feels_like: data.main.feels_like + 273.15
+      },
+      wind: {
+        speed: data.wind.speed
+      },
+      rain: data.rain ? {
+        '1h': data.rain['1h'] || 0
+      } : null
+    };
+    
+    console.log('Weather API Response:', convertedData);
+    return convertedData;
   } catch (error) {
-    console.log(error);
+    console.error('Failed to fetch weather data:', error);
+    return null;
   }
 };
