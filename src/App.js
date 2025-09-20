@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CssBaseline, Grid } from '@material-ui/core';
 
-import { getPlacesData } from './api';
+import { getPlacesData, getWeatherData } from './api';
 import Header from './components/Header/Header';
 import List from './components/List/List';
 import Map from './components/Map/Map';
@@ -9,6 +9,7 @@ import Map from './components/Map/Map';
 const App = () => {
 
     const [places, setPlaces] = useState([]);
+    const [weatherData, setWeatherData] = useState([]);
     const [filteredPlaces, setFilteredPlaces] = useState([]);
     const [childClicked, setChildClicked] = useState(null);
     const [coordinates, setCoordinates] = useState({});
@@ -24,6 +25,20 @@ const App = () => {
     }, []);
 
     useEffect(() => {
+        if (coordinates.lat && coordinates.lng) {
+            console.log('Fetching weather for coordinates:', coordinates);
+            getWeatherData(coordinates.lat, coordinates.lng)
+                .then((data) => {
+                    console.log('Weather data received:', data);
+                    setWeatherData(data);
+                })
+                .catch((error) => {
+                    console.error('Failed to fetch weather data:', error);
+                });
+        }
+    }, [coordinates]);
+
+    useEffect(() => {
         const filteredPlaces = places.filter((place) => Number(place.rating) > rating);
         setFilteredPlaces(filteredPlaces);
     }, [rating]);
@@ -31,9 +46,9 @@ const App = () => {
     useEffect(() => {
         if (bounds.sw && bounds.ne) {
             setIsLoading(true);
-            getPlacesData(bounds.sw, bounds.ne, type, coordinates)
+            getPlacesData(bounds.sw, bounds.ne, type)
                 .then((data) => {
-                    setPlaces(data || []);
+                    setPlaces(data.filter((place) => place.name && place.num_reviews > 0) || []);
                     setFilteredPlaces([]);
                     setIsLoading(false);
                 })
@@ -42,12 +57,12 @@ const App = () => {
                     setIsLoading(false);
                 });
         }
-    }, [type, bounds, coordinates]);
+    }, [type, bounds]);
 
     return (
         <div>
             <CssBaseline />
-            <Header />
+            <Header setCoordinates={setCoordinates} />
             <Grid container spacing={3} style={{ width: '100%' }}>
                 <Grid item xs={12} md={4}>
                     <List 
@@ -68,6 +83,7 @@ const App = () => {
                         places={filteredPlaces.length ? filteredPlaces : places}
                         childClicked={childClicked}
                         setChildClicked={setChildClicked}
+                        weatherData={weatherData}
                     />
                 </Grid>
             </Grid>

@@ -4,9 +4,8 @@ import { Paper, Typography, useMediaQuery } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOn';
 import useStyles from './styles';
 import Rating from '@material-ui/lab/Rating';
-import { Place } from '@material-ui/icons';
 
-const Map = ({ setCoordinates, setBounds, coordinates, places, childClicked, setChildClicked }) => {
+const Map = ({ setCoordinates, setBounds, coordinates, places, childClicked, setChildClicked, weatherData }) => {
     const classes = useStyles();
     const isDesktop = useMediaQuery('(min-width:600px)');
 
@@ -49,6 +48,45 @@ const Map = ({ setCoordinates, setBounds, coordinates, places, childClicked, set
                         }
                     </div>
                 ))}
+                
+                {weatherData?.weather?.[0] && coordinates?.lat && coordinates?.lng && (
+                    <div 
+                        lat={coordinates.lat + 0.0} 
+                        lng={coordinates.lng - 0.0}
+                        style={{
+                            background: 'rgba(255, 255, 255, 0.95)',
+                            padding: '12px',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            fontSize: '12px',
+                            minWidth: '100px',
+                            border: '1px solid rgba(0,0,0,0.1)'
+                        }}
+                    >
+                        <img 
+                            src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                            alt={weatherData.weather[0].description}
+                            style={{ width: '50px', height: '50px', marginBottom: '4px' }}
+                        />
+                        <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#333' }}>
+                            {Math.round(weatherData.main.temp - 273.15)}°C
+                        </div>
+                        <div style={{ fontSize: '11px', color: '#666', textAlign: 'center', textTransform: 'capitalize' }}>
+                            {weatherData.weather[0].description}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#888', marginTop: '2px' }}>
+                            {weatherData.name}
+                        </div>
+                        {weatherData.rain && (
+                            <div style={{ fontSize: '10px', color: '#4A90E2', marginTop: '2px' }}>
+                                🌧️ {weatherData.rain['1h']}mm/h
+                            </div>
+                        )}
+                    </div>
+                )}
             </GoogleMapReact>
         </div>
     );
