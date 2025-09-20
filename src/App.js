@@ -26,10 +26,8 @@ const App = () => {
 
     useEffect(() => {
         if (coordinates.lat && coordinates.lng) {
-            console.log('Fetching weather for coordinates:', coordinates);
             getWeatherData(coordinates.lat, coordinates.lng)
                 .then((data) => {
-                    console.log('Weather data received:', data);
                     setWeatherData(data);
                 })
                 .catch((error) => {

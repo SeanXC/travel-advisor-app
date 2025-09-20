@@ -7,11 +7,23 @@ const List = ( { places, childClicked, isLoading, type, rating, setType, setRati
     const classes = useStyles();
     const [elRefs, setElRefs] = useState([]);
 
+    useEffect(() => {
+        if (places && places.length > 0) {
+            const refs = Array(places.length).fill().map((_, i) => elRefs[i] || createRef());
+            setElRefs(refs);
+        }
+    }, [places]);
 
     useEffect(() => {
-        const refs = Array(places?.length).fill().map((_, i) => elRefs[i] || createRef());
-        setElRefs(refs);
-    }, [places]);
+        if (childClicked !== null && elRefs.length > 0 && elRefs[childClicked]) {
+            setTimeout(() => {
+                elRefs[childClicked]?.current?.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 100);
+        }
+    }, [childClicked, elRefs]);
 
     return (
         <div className={classes.container}>
@@ -41,13 +53,12 @@ const List = ( { places, childClicked, isLoading, type, rating, setType, setRati
             </FormControl>
             <Grid container spacing={3} className={classes.list}>
                 {places?.map((place, i) => (
-                    <Grid item xs={12} key={i}>
+                    <Grid item xs={12} key={i} ref={elRefs[i]}>
                         <PlaceDetails 
                             place={place}
                             selected={Number(childClicked) === i}
                             refProp={elRefs[i]}
                          />
-
                     </Grid>
                 ))}
             </Grid>
