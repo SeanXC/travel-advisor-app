@@ -3,10 +3,9 @@
 A React-based travel assistant that helps users discover restaurants, hotels, and attractions with real-time weather and an interactive Google Map interface.  
 
 ---
-
 ## Live Demo
+
 [Map-Based Travel Recommendation System](https://travel-rco-sys.netlify.app/)  
-GitHub: [https://github.com/SeanXC/travel-advisor-app](https://github.com/SeanXC/travel-advisor-app)
 
 ---
 
